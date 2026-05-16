@@ -1,0 +1,44 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: #E8E4E4;
+}
+
+/* 데스크탑: 폰 프레임을 화면 중앙에 배치 */
+@media (min-width: 600px) {
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+  }
+}
+
+#root {
+  width: 100%;
+  height: 100dvh;
+}
+
+@media (min-width: 600px) {
+  #root {
+    width: 100vw;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+button {
+  font-family: inherit;
+}

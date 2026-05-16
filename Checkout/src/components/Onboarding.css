@@ -1,0 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+
+/* ── Phone wrapper: 모바일=전체화면, 데스크탑=930:2020 비율 폰 프레임 ── */
+.ob {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100dvh;
+  background: #fff;
+  font-family: 'Noto Sans KR', -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  overflow: hidden;
+}
+
+/* 데스크탑에서 930:2020 비율 폰 프레임 */
+@media (min-width: 600px) {
+  .ob {
+    aspect-ratio: 930 / 2020;
+    height: min(2020px, 92dvh);
+    width: auto;
+    border-radius: 44px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+}
+
+/* ── Top nav (back + progress) ─────────────────── */
+.ob__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 20px 12px;
+  flex-shrink: 0;
+}
+
+.ob__back-slot {
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.ob__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+
+.ob__back:hover {
+  background: #F0F0F0;
+}
+
+.ob__back:active {
+  background: #E4E4E4;
+}
+
+.ob__progress {
+  display: flex;
+  flex: 1;
+  gap: 6px;
+}
+
+.ob__pill {
+  flex: 1;
+  height: 8px;
+  border-radius: 8px;
+  background: #E0DEDE;
+  transition: flex 0.35s ease, background 0.35s ease;
+}
+
+.ob__pill--on {
+  flex: 3;
+  background: #8C1515;
+}
+
+.ob__pill--past {
+  background: #C8A0A0;
+}
+
+/* ── Scrollable body ──────────────────────────── */
+.ob__scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 20px 20px;
+  /* 스크롤바 숨김 */
+  scrollbar-width: none;
+}
+.ob__scroll::-webkit-scrollbar { display: none; }
+
+/* ── Step shared ──────────────────────────────── */
+.step {
+  padding-top: 12px;
+}
+
+.step__h1 {
+  font-size: 34px;
+  font-weight: 900;
+  color: #111;
+  margin: 0 0 6px;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.step__sub {
+  font-size: 14px;
+  color: #777;
+  margin: 0 0 40px;
+  font-weight: 400;
+}
+
+/* ── Style grid (Q1) ──────────────────────────── */
+.sg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.sg__card {
+  position: relative;
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  aspect-ratio: 1;
+  box-shadow: 0 0 0 3px #D0D0D0;
+  transition: box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+.sg__card:active {
+  transform: scale(0.97);
+}
+
+.sg__card--on {
+  box-shadow: 0 0 0 3px #8C1515;
+}
+
+.sg__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.sg__lbl {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 28px 12px 12px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+}
+
+/* ── Fit list (Q2) ────────────────────────────── */
+.fl {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fl__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.fl__fig {
+  width: 88px;
+  flex-shrink: 0;
+}
+
+.fl__fig-inner {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.fl__fig-img {
+  width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.fl__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fl__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #EBEBEB;
+  color: #555;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 5px 13px;
+  border-radius: 20px;
+  align-self: flex-start;
+  transition: background 0.15s, color 0.15s;
+}
+
+.fl__chip--on {
+  background: #8C1515;
+  color: #fff;
+}
+
+.fl__sub {
+  font-size: 11px;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.fl__box {
+  background: #F6F6F6;
+  border: 2px solid #E2E2E2;
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.65;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.fl__box--on {
+  border-color: #8C1515;
+  background: #FFF5F5;
+  color: #3A0808;
+}
+
+/* ── Lifestyle list (Q3) ──────────────────────── */
+.ll {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ll__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 18px 20px;
+  border: 2px solid #E2E2E2;
+  border-radius: 18px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+}
+
+.ll__item:active {
+  transform: scale(0.98);
+}
+
+.ll__item--on {
+  border-color: #8C1515;
+  background: #FFF5F5;
+}
+
+.ll__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+}
+
+.ll__item--on .ll__name {
+  color: #8C1515;
+}
+
+.ll__desc {
+  font-size: 13px;
+  color: #999;
+  font-weight: 400;
+}
+
+/* ── Footer ───────────────────────────────────── */
+.ob__footer {
+  padding: 10px 20px 32px;
+  flex-shrink: 0;
+}
+
+.ob__btn {
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 16px;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: opacity 0.15s, transform 0.1s;
+  font-family: inherit;
+}
+
+.ob__btn:disabled {
+  cursor: not-allowed;
+}
+
+.ob__btn:not(:disabled):active {
+  transform: scale(0.98);
+  opacity: 0.88;
+}

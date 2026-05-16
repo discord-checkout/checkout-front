@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"/d/2026/26-1/멋사/구현/checkout-front/Checkout/public\" -type f 2>/dev/null || find \"/d/2026/26-1\" -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.webp\" 2>/dev/null | head -30)",
+      "Read(//d/2026/26-1/**)",
+      "Bash(git -C \"/d/2026/26-1/멋사/구현/checkout-front\" remote -v)",
+      "Bash(git -C \"/d/2026/26-1/멋사/구현/checkout-front\" status)"
+    ]
+  }
+}
