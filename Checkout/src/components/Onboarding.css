@@ -297,6 +297,88 @@
   font-weight: 400;
 }
 
+/* ── Wardrobe tabs (Q4) ───────────────────────── */
+.wt {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.wt__tab {
+  flex: 1;
+  height: 52px;
+  border: 2px solid #E2E2E2;
+  border-radius: 14px;
+  background: #F0F0F0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.wt__tab--on {
+  border-color: #AAAAAA;
+  background: #E4E4E4;
+  color: #111;
+}
+
+/* ── Wardrobe items (Q4) ──────────────────────── */
+.wi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.wi__pill {
+  padding: 10px 20px;
+  border-radius: 50px;
+  background: #EBEBEB;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #777;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: inherit;
+}
+
+.wi__pill--on {
+  background: #8C1515;
+  color: #fff;
+}
+
+/* ── Budget (Q5) ──────────────────────────────── */
+.bg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.bg__btn {
+  height: 64px;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  background: #EBEBEB;
+  font-size: 16px;
+  font-weight: 700;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.bg__btn:active {
+  transform: scale(0.97);
+}
+
+.bg__btn--on {
+  border-color: #8C1515;
+  background: #FFF5F5;
+  color: #8C1515;
+}
+
 /* ── Footer ───────────────────────────────────── */
 .ob__footer {
   padding: 10px 20px 32px;
