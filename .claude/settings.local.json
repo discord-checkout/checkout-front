@@ -6,7 +6,8 @@
       "Bash(curl -s http://localhost:5173)",
       "Bash(curl -s http://localhost:5173/src/components/Onboarding.jsx)",
       "Bash(Get-ChildItem \"d:\\\\2026\\\\26-1\\\\멋사\\\\구현\\\\checkout-front\\\\Checkout\\\\public\\\\images\" -Recurse)",
-      "Bash(Select-Object FullName, Name)"
+      "Bash(Select-Object FullName, Name)",
+      "Bash(npx vite *)"
     ],
     "additionalDirectories": [
       "D:\\2026\\26-1\\멋사\\구현\\checkout-front\\Checkout\\src"
