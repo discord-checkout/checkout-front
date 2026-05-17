@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+
+.rp {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100dvh;
+  background: #fff;
+  font-family: 'Noto Sans KR', -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  overflow: hidden;
+}
+
+@media (min-width: 600px) {
+  .rp {
+    aspect-ratio: 390 / 844;
+    height: min(844px, 92dvh);
+    width: auto;
+    border-radius: 44px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.28), 0 0 0 1px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+}
+
+/* ── 로딩 화면 ── */
+.rp__loading {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.rp__spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid #E8E8E8;
+  border-top-color: #8C1515;
+  border-radius: 50%;
+  animation: rp-spin 0.8s linear infinite;
+}
+
+@keyframes rp-spin {
+  to { transform: rotate(360deg); }
+}
+
+.rp__loading-text {
+  font-size: 15px;
+  color: #999;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ── 스크롤 영역 ── */
+.rp__scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 28px 20px 20px;
+  scrollbar-width: none;
+}
+.rp__scroll::-webkit-scrollbar { display: none; }
+
+/* ── 헤더 ── */
+.rp__title {
+  font-size: 26px;
+  font-weight: 900;
+  color: #111;
+  margin: 0 0 4px;
+  letter-spacing: -0.3px;
+}
+
+.rp__sub {
+  font-size: 14px;
+  color: #999;
+  margin: 0 0 32px;
+  font-weight: 400;
+}
+
+/* ── 단계 카드 ── */
+.rp__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 36px;
+}
+
+.rp__month-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rp__month-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #AAAAAA;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rp__month-label--on {
+  color: #8C1515;
+}
+
+.rp__card {
+  border: 1.5px solid #E2E2E2;
+  border-radius: 18px;
+  padding: 18px 16px;
+  transition: border-color 0.15s;
+}
+
+.rp__card--on {
+  border-color: #8C1515;
+  border-width: 2px;
+}
+
+.rp__card-body {
+  flex: 1;
+}
+
+.rp__when {
+  font-size: 13px;
+  color: #999;
+  margin: 0 0 4px;
+  font-weight: 400;
+}
+
+.rp__dot {
+  color: #8C1515;
+}
+
+.rp__name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 6px;
+}
+
+.rp__card:not(.rp__card--on) .rp__name {
+  color: #AAAAAA;
+}
+
+.rp__heart {
+  font-size: 16px;
+}
+
+.rp__combo {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+  font-style: italic;
+}
+
+/* ── 구분선 ── */
+.rp__divider {
+  border: none;
+  border-top: 1px solid #E8E8E8;
+  margin: 0 0 28px;
+}
+
+/* ── 통계 ── */
+.rp__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.rp__stat {
+  background: #F4F4F4;
+  border-radius: 14px;
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.rp__stat-value {
+  font-size: 15px;
+  font-weight: 900;
+  color: #111;
+  margin: 0 0 4px;
+}
+
+.rp__stat-label {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ── 옷장 추가 버튼 ── */
+.rp__add-btn {
+  margin-top: 10px;
+  padding: 6px 16px;
+  border: 1.5px solid #8C1515;
+  border-radius: 20px;
+  background: none;
+  color: #8C1515;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.rp__add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rp__add-btn:not(:disabled):active {
+  background: #8C1515;
+  color: #fff;
+}
+
+/* ── 스켈레톤 ── */
+.rp__card--skeleton {
+  height: 100px;
+  border: none;
+  background: linear-gradient(90deg, #F0F0F0 25%, #E4E4E4 50%, #F0F0F0 75%);
+  background-size: 200% 100%;
+  animation: rp-shimmer 1.2s infinite;
+}
+
+@keyframes rp-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── 저장 버튼 ── */
+.rp__save-btn {
+  width: 100%;
+  height: 54px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.15s;
+}
+
+.rp__save-btn:active {
+  opacity: 0.8;
+}

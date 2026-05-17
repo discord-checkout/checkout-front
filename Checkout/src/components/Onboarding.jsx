@@ -1,5 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './Onboarding.css'
+import { diagnoseOnboarding, buildOnboardingPayload, resetUserId, getFirstItemRecommendation, getRoadmap } from '../api'
+
+const LOADING_MSGS = [
+  '스타일 분석 중...',
+  '옷장 조합 계산 중...',
+  '퍼스널 추천 생성 중...',
+  '로드맵 구성 중...',
+  '거의 다 됐어요!',
+]
 
 const PRIMARY = '#8C1515'
 
@@ -53,35 +62,79 @@ const BUDGETS = ['5만원 이하', '5~10만원', '10~15만원', '15~20만원', '
 
 const TOTAL = 5
 
-export default function Onboarding() {
+export default function Onboarding({ onComplete, onBack }) {
   const [step, setStep] = useState(1)
-  const [selStyles, setSelStyles] = useState([])
+  const [selStyle, setSelStyle] = useState(null)
   const [selFit, setSelFit] = useState(null)
   const [selLifestyle, setSelLifestyle] = useState(null)
   const [selWardrobe, setSelWardrobe] = useState([])
   const [selBudget, setSelBudget] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [loadingMsgIdx, setLoadingMsgIdx] = useState(0)
+  const [error, setError] = useState(null)
+  const timerRef = useRef(null)
 
-  const toggleStyle = id =>
-    setSelStyles(p => p.includes(id) ? p.filter(s => s !== id) : [...p, id])
+  useEffect(() => {
+    if (!loading) { clearInterval(timerRef.current); return }
+    timerRef.current = setInterval(() => {
+      setLoadingMsgIdx(i => Math.min(i + 1, LOADING_MSGS.length - 1))
+    }, 4000)
+    return () => clearInterval(timerRef.current)
+  }, [loading])
 
   const toggleWardrobe = item =>
     setSelWardrobe(p => p.includes(item) ? p.filter(s => s !== item) : [...p, item])
 
   const canNext =
-    (step === 1 && selStyles.length > 0) ||
+    (step === 1 && selStyle !== null) ||
     (step === 2 && selFit !== null) ||
     (step === 3 && selLifestyle !== null) ||
-    (step === 4 && selWardrobe.length > 0) ||
+    step === 4 ||
     (step === 5 && selBudget !== null)
 
-  const next = () => { if (step < TOTAL) setStep(s => s + 1) }
-  const back = () => { if (step > 1) setStep(s => s - 1) }
+  const handleAction = async () => {
+    if (!canNext || loading) return
+    if (step < TOTAL) {
+      setStep(s => s + 1)
+    } else {
+      setLoading(true)
+      setLoadingMsgIdx(0)
+      setError(null)
+      const localData = {
+        style:     STYLES.find(s => s.id === selStyle),
+        fit:       FITS.find(f => f.id === selFit),
+        lifestyle: LIFESTYLES.find(l => l.id === selLifestyle),
+        wardrobe:  selWardrobe,
+        budget:    selBudget,
+      }
+      try {
+        resetUserId()
+        const payload = buildOnboardingPayload(localData)
+        const apiResult = await diagnoseOnboarding(payload)
+        const [recData, roadmapData] = await Promise.all([
+          getFirstItemRecommendation(),
+          getRoadmap(),
+        ])
+        onComplete?.({ ...localData, ...apiResult }, recData, roadmapData)
+      } catch (err) {
+        console.error('[Onboarding] API 오류:', err)
+        setError(`오류: ${err?.body?.detail ?? err?.message ?? '알 수 없는 오류'}`)
+        setLoading(false)
+      }
+    }
+  }
+
+  const back = () => {
+    if (loading) return
+    if (step > 1) setStep(s => s - 1)
+    else onBack?.()
+  }
 
   return (
     <div className="ob">
       <div className="ob__nav">
         <div className="ob__back-slot">
-          {step > 1 && (
+          {(step > 1 || onBack) && !loading && (
             <button className="ob__back" onClick={back} aria-label="뒤로가기">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M15 18l-6-6 6-6" stroke="#111" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -100,7 +153,7 @@ export default function Onboarding() {
       </div>
 
       <div className="ob__scroll">
-        {step === 1 && <StyleStep selected={selStyles} toggle={toggleStyle} />}
+        {step === 1 && <StyleStep selected={selStyle} onSelect={setSelStyle} />}
         {step === 2 && <FitStep selected={selFit} onSelect={setSelFit} />}
         {step === 3 && <LifestyleStep selected={selLifestyle} onSelect={setSelLifestyle} />}
         {step === 4 && <WardrobeStep selected={selWardrobe} onToggle={toggleWardrobe} />}
@@ -108,20 +161,21 @@ export default function Onboarding() {
       </div>
 
       <div className="ob__footer">
+        {error && <p style={{ color: '#8C1515', fontSize: 13, textAlign: 'center', margin: '0 0 8px' }}>{error}</p>}
         <button
           className="ob__btn"
-          onClick={next}
-          disabled={!canNext}
-          style={{ background: canNext ? PRIMARY : '#C8A8A8' }}
+          onClick={handleAction}
+          disabled={!canNext || loading}
+          style={{ background: canNext && !loading ? PRIMARY : '#C8A8A8' }}
         >
-          {step === TOTAL ? 'Start !' : 'Continue'}
+          {loading ? LOADING_MSGS[loadingMsgIdx] : step === TOTAL ? 'Start !' : 'Continue'}
         </button>
       </div>
     </div>
   )
 }
 
-function StyleStep({ selected, toggle }) {
+function StyleStep({ selected, onSelect }) {
   return (
     <div className="step">
       <h1 className="step__h1">스타일 고르기</h1>
@@ -130,8 +184,8 @@ function StyleStep({ selected, toggle }) {
         {STYLES.map(s => (
           <button
             key={s.id}
-            className={`sg__card${selected.includes(s.id) ? ' sg__card--on' : ''}`}
-            onClick={() => toggle(s.id)}
+            className={`sg__card${selected === s.id ? ' sg__card--on' : ''}`}
+            onClick={() => onSelect(selected === s.id ? null : s.id)}
           >
             <div
               className="sg__img"
