@@ -49,7 +49,7 @@ const LIFESTYLES = [
   { id: 'campus',    label: '캠퍼스 라이프', desc: '강의, 스터디, 과제 발표',       img: '/images/lifestyles/캠퍼스.jpg' },
   { id: 'office',    label: '직장인',        desc: '출퇴근, 미팅, 업무 환경',       img: '/images/lifestyles/직장.jpg' },
   { id: 'freelance', label: '자유직',        desc: '재택, 카페, 자유로운 일상',     img: '/images/lifestyles/자유직.jpg' },
-  { id: 'military',  label: '전역 후',       desc: '사회복귀, 새출발, 새 스타일',   img: '/images/lifestyles/전역후.jpg' },
+  { id: 'daily',     label: '데일리',        desc: '사회복귀, 새출발, 새 스타일',   img: '/images/lifestyles/전역후.jpg' },
 ]
 
 const WARDROBE = {

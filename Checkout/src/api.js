@@ -27,10 +27,10 @@ function apiHeaders() {
 const STYLE_MAP = {
   minimal: 'minimal',
   casual:  'casual',
-  dandy:   'amekaji',
+  dandy:   'dandy',
   sports:  'sports',
   vintage: 'vintage',
-  street:  'cityboy',
+  street:  'street',
 }
 
 const FIT_MAP = {
@@ -43,56 +43,56 @@ const LIFESTYLE_MAP = {
   campus:    'campus',
   office:    'office',
   freelance: 'freelance',
-  military:  'daily',
+  daily:     'daily',
 }
 
 const BUDGET_MAP = {
   '5만원 이하':  'under_5',
   '5~10만원':   '5_to_10',
-  '10~15만원':  '10_to_20',
-  '15~20만원':  '10_to_20',
+  '10~15만원':  '10_to_15',
+  '15~20만원':  '15_to_20',
   '20만원 이상': 'over_20',
 }
 
-// 한국어 아이템명 → { cat, key }
+// 한국어 아이템명 → 카테고리 (API가 한국어 그대로 받음)
 const WARDROBE_ITEM_MAP = {
   // 상의 → top
-  '베이직 셔츠': { cat: 'top',    key: 'basic_shirt' },
-  '니트':        { cat: 'top',    key: 'knit' },
-  '티셔츠':      { cat: 'top',    key: 'white_black_tee' },
-  '긴팔티':      { cat: 'top',    key: 'long_sleeve_tee' },
-  '맨투맨':      { cat: 'top',    key: 'sweatshirt' },
-  '후드티':      { cat: 'top',    key: 'hoodie' },
-  '반팔셔츠':    { cat: 'top',    key: 'short_sleeve_shirt' },
-  '린넨셔츠':    { cat: 'top',    key: 'linen_shirt' },
-  '폴로셔츠':    { cat: 'top',    key: 'polo_shirt' },
+  '베이직 셔츠': 'top',
+  '니트':        'top',
+  '티셔츠':      'top',
+  '긴팔티':      'top',
+  '맨투맨':      'top',
+  '후드티':      'top',
+  '반팔셔츠':    'top',
+  '린넨셔츠':    'top',
+  '폴로셔츠':    'top',
   // 하의 → bottom
-  '슬랙스':      { cat: 'bottom', key: 'black_slacks' },
-  '청바지':      { cat: 'bottom', key: 'wide_denim' },
-  '조거팬츠':    { cat: 'bottom', key: 'jogger_pants' },
-  '반바지':      { cat: 'bottom', key: 'shorts' },
-  '면바지':      { cat: 'bottom', key: 'cotton_pants' },
-  '와이드팬츠':  { cat: 'bottom', key: 'wide_pants' },
-  '카고팬츠':    { cat: 'bottom', key: 'cargo_pants' },
+  '슬랙스':      'bottom',
+  '청바지':      'bottom',
+  '조거팬츠':    'bottom',
+  '반바지':      'bottom',
+  '면바지':      'bottom',
+  '와이드팬츠':  'bottom',
+  '카고팬츠':    'bottom',
   // 아우터 → outer
-  '코트':        { cat: 'outer',  key: 'coat' },
-  '트렌치코트':  { cat: 'outer',  key: 'trench_coat' },
-  '패딩':        { cat: 'outer',  key: 'padding' },
-  '자켓':        { cat: 'outer',  key: 'coach_jacket' },
-  '블레이저':    { cat: 'outer',  key: 'blazer' },
-  '가디건':      { cat: 'outer',  key: 'cardigan' },
-  '후드집업':    { cat: 'outer',  key: 'hoodie_zip_up' },
-  '점퍼':        { cat: 'outer',  key: 'jumper' },
-  '바람막이':    { cat: 'outer',  key: 'windbreaker' },
+  '코트':        'outer',
+  '트렌치코트':  'outer',
+  '패딩':        'outer',
+  '자켓':        'outer',
+  '블레이저':    'outer',
+  '가디건':      'outer',
+  '후드집업':    'outer',
+  '점퍼':        'outer',
+  '바람막이':    'outer',
 }
 
 // ── payload 빌더 ──────────────────────────────────────────
 
 export function buildOnboardingPayload({ style, fit, lifestyle, wardrobe, budget }) {
-  const current_wardrobe = { top: [], bottom: [], outer: [], shoes: [] }
+  const current_wardrobe = { top: [], bottom: [], outer: [] }
   for (const item of wardrobe) {
-    const mapped = WARDROBE_ITEM_MAP[item]
-    if (mapped) current_wardrobe[mapped.cat].push(mapped.key)
+    const cat = WARDROBE_ITEM_MAP[item]
+    if (cat) current_wardrobe[cat].push(item)
   }
   return {
     style_mood:        STYLE_MAP[style.id]     ?? style.id,
